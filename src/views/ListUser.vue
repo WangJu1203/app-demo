@@ -2,11 +2,34 @@
   <div>
     List User
 
-    <ul>
-      <li v-for="(item, index) in response" :key="index">
-        {{ item }}
-      </li>
-    </ul>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Firstname</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Email</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item, index) in listUser" :key="index">
+          <td>{{ index }}</td>
+          <td>{{ item.username }}</td>
+          <td>{{ item.phone }}</td>
+          <td>{{ item.email }}</td>
+          <td>
+            <button class="btn btn-danger" @click="modalShow = !modalShow">
+              Delete
+            </button>
+            <b-modal v-model="modalShow"
+              >Are you sure delete this user have email =
+              <b>{{ item.email }}</b>
+            </b-modal>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -17,18 +40,20 @@ export default {
 
   data() {
     return {
-      response: [],
+      modalShow: false,
+      listUser: [],
     };
   },
-  created() {
-    axios.get("https://fakestoreapi.com/users").then((res) => {
+  async created() {
+    await axios.get("https://fakestoreapi.com/users").then((res) => {
+      console.log(res.data);
       //   console.log("2");
-      this.response = [res.data];
+      this.listUser = res.data;
     });
   },
 
   mounted() {
-    console.log("1");
+    // console.log("1");
   },
   watch: {
     response: function () {
@@ -38,7 +63,7 @@ export default {
   },
   updated() {
     // console.log("4");
-    // console.log(this.response);
+    console.log(this.listUser);
   },
 
   methods: {},
