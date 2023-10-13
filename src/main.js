@@ -4,6 +4,7 @@ import router from "./router";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import { BootstrapVue } from "bootstrap-vue";
+import "boxicons";
 
 Vue.config.productionTip = false;
 
