@@ -2,8 +2,8 @@
   <div class="container-main gap-5">
     <div class="d-flex justify-content-around">
       <div class="p-2">Add New User</div>
-      <button type="button" class="btn btn-primary" @click="addItem">
-        Save
+      <button type="button" class="btn btn-primary" @click="handlerAddUser">
+        back
       </button>
     </div>
     <input
@@ -27,6 +27,7 @@
       aria-label=".form-control-lg example"
       v-model="email"
     />
+    <button @click="addItem">Save</button>
   </div>
 </template>
 
@@ -48,10 +49,10 @@ export default {
   mounted() {},
 
   methods: {
-    addItem() {
+    addItem: async function () {
       this.items.push(this.newUser);
       console.log(this.items);
-      axios
+      const res = await axios
         .post("https://fakestoreapi.com/users", this.newUser)
         .then(function (response) {
           console.log(response);
@@ -59,6 +60,14 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+      if (res?.data?.token) {
+        alert("add success");
+      } else {
+        alert("failed");
+      }
+    },
+    handlerAddUser() {
+      this.$router.push("/listUser");
     },
   },
 };
